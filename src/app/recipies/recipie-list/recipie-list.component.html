@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-xs-12">
+    <button class="btn btn-success" (click)="onNewRecipie()">
+      New Recipie
+    </button>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col-xs-12">
+    <app-recipie-item
+      *ngFor="let recipie of recipies; let i = index"
+      [recipieItem]="recipie"
+      [index]="i"
+    ></app-recipie-item>
+    <!-- <app-recipie-item
+      *ngFor="let recipie of recipies"
+      [recipieItem]="recipie"
+      (sendRecipietoList)="OnRecipieSelected(recipie)"
+    ></app-recipie-item> -->
+  </div>
+</div>
