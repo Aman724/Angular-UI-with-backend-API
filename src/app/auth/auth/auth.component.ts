@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertComponent } from 'src/app/shared/alert/alert.component';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -8,7 +9,11 @@ import { AuthService } from './auth.service';
   templateUrl: './auth.component.html',
 })
 export class AuthComponent implements OnInit {
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private cfr: ComponentFactoryResolver
+  ) {}
 
   ngOnInit(): void {}
   isLoginMode = true;
@@ -45,13 +50,21 @@ export class AuthComponent implements OnInit {
         },
         (errorMes) => {
           console.log(errorMes);
-
           this.errorMessage = errorMes;
+          this.showErrorAlert(errorMes);
           this.isLoading = false;
         }
       );
     }
 
     form.reset();
+  }
+
+  onHandleError() {
+    this.errorMessage = null;
+  }
+
+  private showErrorAlert(mes: string) {
+    const alertCmpFactory = this.cfr.resolveComponentFactory(AlertComponent);
   }
 }
